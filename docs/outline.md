@@ -1,49 +1,71 @@
-personal / profressional website:
+# Personal / Professional Website
 
-basic nextjs project created -
+## Project Overview
 
-hosted on netlify/ thru github / 
+- **Stack:** Next.js (TypeScript, App Router), Tailwind CSS, ESLint, TurboRepo, import alias `@/*`
+- **Hosting:** Netlify via GitHub
+- **Initial Focus:** Mostly static site, with plans to embed apps, APIs, and more dynamic features over time.
+- **Code Structure:** Clear distinction between server-side and client-side code, with well-defined rules.
 
-mostly static for now - will incorporate more function eventually like embedding my apps, apis, etc. 
+## Initial Pages
 
-clear distinction between server sid and client sid with clear rules
+1. **Landing Page:**
+   - Welcome placeholder (no animations at first).
+2. **Style Guide:**
+   - Sections to organize fonts, components, buttons, and other visual elements.
+   - Serves as a living reference for themes, colors, and styling.
+   - Prefer in-code, real-time editable style guide over external tools (e.g., Netlify Visual Editor).
+   - Open to exploring packages that help with style documentation, but want it close to the codebase.
 
-first page welcome placeholder
-second page styling guide - with sections to organize fonts, componnents, buttons, etc - our own visual styling representation of our themes, colors, etc. nothin too fancy - just a way for us to keep our styling organized here at first - unless theres betetr ways - packages that do this for us etc.. netlfiy visual editor has some nice function, but we want it closer to us in code so we can see and test chsnges in real-time 
+## Development Foundations
 
-initial setup should focus on the foundations - rules - typesaftey - setting uo and configuring the project and making sure all is flush and sorte before doing any design
+- Prioritize foundational setup: rules, type safety, configuration, and project structure before major design or code implementation.
+- Maintain a clear, organized, and type-safe codebase.
 
-look up the nextjs netlify integrations - they cover a lot of the backend work - but lets assure were complimenting and filling in any gaps without redundancy - netlify has a good nextjs media optimization system, cahcing etc. so no need to build these ourselves unless we run into specific issues
+## Documentation & Resources
 
-for srtyling - ill want to test  few different packs - material, shadcn, tailwindcss etc so ill be creating a few branches from main - one for preview - and a couple for A/B testing different features or themes. ill need to assure hat these always stay updated in the rpoepr way, e.g when i make changes to main, regardless of where they come from- whther a push from preview, or a push from A/B to preview to main, they should all synch accordingly so thst they cath up to main and can be iterated again but not be behind -
+- Keep an organized section in `/docs` with official resources for troubleshooting and reference.
+- Research and document:
+  - Next.js and Netlify integration (media optimization, caching, etc.).
+  - Any backend work handled by Netlify/Next.js, and identify gaps to fill without redundancy.
 
-ill also want to setup the github actions - and some dependabot, automATION FLOWS FOR WEHN I SUBMIT CHANGES ETC.. BUT THIS CAN WAIT UNTIL WEVE ESTABLISHED OUR SITE IS WORKING AND AT A DECENT PLACE TO GO LIVE
+## Styling & Theming
 
-will be a creative feeling website - open space - interactivce - will start from a view of space.. and immersive scroll feeling as you zoom into the galaxy, then down through clouds, into earths atmosphere, down above map view, down to tree level, underground view, roots growing down as we scroll, down into the crust and mantle, back to outterspace galaxy view at the end.. 
+- **Base:** Tailwind CSS.
+- **A/B Testing:**
+  - Create branches for preview and for testing opinionated UI packages (e.g., Material UI, shadcn).
+  - Ensure all branches (main, preview, A/B) stay up-to-date and in sync, regardless of where changes originate.
+  - Develop a workflow for merging and synchronizing branches to avoid falling behind or merge headaches.
 
-will have the following sections: *NOT READY TO BE CREATED OR EVEN SCAFFOLED YET- ONLY LANDING PAGE(WELCOME ONLY) and the STYLE GUIDE pages will be created at first - ill dial in the styling page before adding real pages with any design or code bitu the rest fo the major pages planned so far:
-landing page with slick scroll animations
-about me / site explaining my idea behind domain names - digitial future - my story
-passions / projects - charity work, personal projects
-professional / work - real work history, resume
-artist / art-music,design,image,videos - music player, image gallery, inspo gallery
-gamer / gaming dev, - resources, links
-developer / development - links, resources
-Thinker / blog - longform, research topics
-Resourceful / resources - goodies
-Community / contact - links, contacts, community boards
-still workign on the way ill order, name, etc this is just for reference. many design/layout decisions will evolve
+## GitHub & Automation
 
+- Plan to set up:
+  - GitHub Actions for CI/CD.
+  - Dependabot and other automation flows for PRs, issues, and workflow routines.
+- Initial automation can wait until the site is stable and ready to go live.
+- Intend to leverage more of GitHub’s automation features (actions, agents, etc.) beyond basic CI/CD.
 
-accounts to connect with:
-email
-X
-github
-discord
+## Creative Direction
 
-next steps: 
-CREAT PRD FROM THIS OUTLINE _ 
-HIGHLY DETAILED WITH CALLOUTS FOR ANY AMBIGUITY_
-END WITH QUESTIONS NEEDED FOR CLARIFICATION_
-STAY IN SCOPE_
+- **Theme:** Immersive, creative, and interactive.
+- **Concept:**
+  - Start with a view of space.
+  - Scroll to zoom into the galaxy, through clouds, into Earth’s atmosphere, down to map view, tree level, underground, and back out to space.
+  - This journey will be visually represented as the site evolves.
 
+## Planned Sections (for future development)
+
+> _Note: Only the landing page and style guide will be created initially. The following sections are planned for later and should not be scaffolded yet._
+
+- Landing page with advanced scroll animations
+- About Me / Site (domain ideas, digital future, personal story)
+- Passions / Projects (charity work, personal projects)
+- Professional / Work (work history, resume)
+- Artist / Art-Music-Design-Image-Videos (music player, image gallery, inspiration)
+- Gamer / Game Dev (resources, links)
+- Developer / Development (links, resources)
+- Thinker / Blog (longform, research topics)
+- Resourceful / Resources (goodies)
+- Community / Contact (links, contacts, community boards)
+
+> _Section names, order, and design will evolve as the project progresses._
