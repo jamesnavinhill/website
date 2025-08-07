@@ -386,21 +386,21 @@ Optional Future (Not now):
 
 | #   | Question                                          | Suggested Options                                        |
 | --- | ------------------------------------------------- | -------------------------------------------------------- |
-| 1   | Dark mode strategy?                               | `class` toggle (recommended) vs `media`                  |
-| 2   | Storybook deployment?                             | Netlify static deploy vs integrate Chromatic             |
+| 1   | Dark mode strategy?                               | `class` toggle                                           |
+| 2   | Storybook deployment?                             | integrate Chromatic                                      |
 | 3   | Adopt Prettier or rely on ESLint formatting only? | Add Prettier for consistency                             |
-| 4   | Testing framework timeline?                       | Defer until after landing page OR start minimal now      |
-| 5   | Do we enforce commit conventions?                 | Add Commitlint + Husky OR skip for now                   |
-| 6   | RSC Storybook approach?                           | Client wrappers vs mark more components client initially |
-| 7   | Analytics / telemetry early?                      | None vs simple privacy-friendly (e.g., Plausible)        |
-| 8   | Feature flag mechanism?                           | Simple config object vs third-party service later        |
-| 9   | Node version pin source?                          | `.nvmrc` + engines vs Netlify only                       |
-| 10  | Semantic release automation?                      | Add later vs manual versioning                           |
-| 11  | A/B naming convention?                            | `ab/<short>` vs `exp/<short>`                            |
-| 12  | CSS variable strategy?                            | Tailwind theme extension only vs combined CSS vars layer |
-| 13  | Accessibility target standard?                    | WCAG 2.1 AA vs higher                                    |
-| 14  | Use import alias for test utilities?              | `@/test/*` alias vs relative                             |
-| 15  | Performance budgets?                              | Add bundlesize / Lighthouse CI vs manual tracking        |
+| 4   | Testing framework timeline?                       | Defer until after landing page                           |
+| 5   | Do we enforce commit conventions?                 | Add Commitlint + Husky                                   |
+| 6   | RSC Storybook approach?                           | THIS IS IMPORTANT _ NEEDS DONE PROPERLY _ NO WORKAROUNDS |
+| 7   | Analytics / telemetry early?                      | simple privacy-friendly (e.g., Plausible)                |
+| 8   | Feature flag mechanism?                           | Simple config object                                     |
+| 9   | Node version pin source?                          | Netlify only                                             |
+| 10  | Semantic release automation?                      | Add later                                                |
+| 11  | A/B naming convention?                            | BEST PRACTICE _ DOESNT MATTER                            |
+| 12  | CSS variable strategy?                            | TailwindCSS with additional styling to be tested         |
+| 13  | Accessibility target standard?                    | SANDARD                                                  |
+| 14  | Use import alias for test utilities?              | LOGICAL - SIMPLE - CLEAN                                 |
+| 15  | Performance budgets?                              | Add bundlesize / Lighthouse CI                           |
 
 ---
 
