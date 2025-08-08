@@ -48,6 +48,13 @@
    - High-level project structure
    - Feature organization
 
+### Automation & CI/CD
+
+8. **GitHub Actions Workflows**
+   - **`ci.yml`** - Build, lint, type-check, and test on push/PR
+   - **`sync-preview.yml`** - Auto-sync preview branch with main updates
+   - Automatic Netlify deployments for preview branches
+
 ## 🎯 Current Priority Actions
 
 ### Immediate (This Week)
