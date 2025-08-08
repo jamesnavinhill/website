@@ -14,17 +14,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  open-pr-and-automerge:
-    name: Open PR preview → main and enable auto-merge
+  open-pr-promotion:
+    name: Open PR preview → main (manual review required)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout preview
         uses: actions/checkout@v4
         with:
           ref: preview
           fetch-depth: 0
-
       - name: Compare and upsert PR (sets env vars)
         id: compare_and_pr
         uses: actions/github-script@v7
@@ -56,44 +54,15 @@ jobs:
                 head: 'preview',
                 base: 'main',
                 title: 'Promote preview to main',
-                body: 'Automated PR to promote latest changes from preview to main. This PR was opened by a workflow and will auto-merge after checks pass.'
+                body: 'Automated PR to promote latest changes from preview to main. This PR was opened by a workflow. **Manual review and approval are required to merge.**'
               })).data;
               core.info(`Created PR #${pr.number}.`);
             }
             // Export PR details as env vars for later steps
             core.exportVariable('PR_NUMBER', String(pr.number));
-            core.exportVariable('PR_NODE_ID', pr.node_id);
-
-      - name: Enable auto-merge (squash) if repository allows it
-        uses: actions/github-script@v7
-        with:
-          script: |
-            if (process.env.HAS_CHANGES !== 'true') {
-              core.info('No changes to promote; skipping auto-merge enable.');
-              return;
-            }
-            const prNodeId = process.env.PR_NODE_ID;
-            if (!prNodeId) {
-              core.warning('No PR node id found, skipping auto-merge enable.');
-              return;
-            }
-            const query = `
-              mutation EnableAutoMerge($pullRequestId: ID!, $method: PullRequestMergeMethod) {
-                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: $method }) {
-                  pullRequest { number, autoMergeRequest { enabledAt, enabledBy { login } } }
-                }
-              }
-            `;
-            try {
-              const result = await github.graphql(query, { pullRequestId: prNodeId, method: 'SQUASH' });
-              core.info(`Auto-merge enabled: ${JSON.stringify(result)}`);
-            } catch (err) {
-              core.warning(`Failed to enable auto-merge (this may mean Auto-merge is disabled in repo settings). Details: ${err}`);
-            }
-
       - name: Summary
         run: |
           if ($env:HAS_CHANGES -eq 'true' -and $env:PR_NUMBER) {
             "Opened/updated PR #$env:PR_NUMBER to promote preview → main." >> $env:GITHUB_STEP_SUMMARY
-            "Auto-merge will occur after required checks pass (if enabled)." >> $env:GITHUB_STEP_SUMMARY
+            "Manual review and approval are required to merge this PR." >> $env:GITHUB_STEP_SUMMARY
           }
