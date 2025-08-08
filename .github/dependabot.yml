@@ -16,6 +16,15 @@ updates:
       prefix: "deps"
       include: "scope"
     groups:
+      # Safe auto-merge candidates
+      patch-updates:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "next"
+        update-types:
+          - "patch"
+      # Dev tooling updates
       dev-dependencies:
         patterns:
           - "@types/*"
@@ -23,9 +32,28 @@ updates:
           - "@storybook/*"
           - "eslint*"
           - "*eslint*"
+          - "prettier"
+          - "vitest"
+          - "@vitest/*"
         update-types:
           - "minor"
           - "patch"
+      # Tailwind ecosystem
+      tailwind-updates:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Ignore problematic or too-frequent updates
+    ignore:
+      # Skip major Node.js type updates for now (requires manual review)
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      # Skip Next.js major versions (breaking changes)
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
