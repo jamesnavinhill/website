@@ -20,7 +20,6 @@
 npm run build
 npm run type-check
 npm run lint
-npm run build-storybook
 ```
 
 #### 3. EVALUATE CAREFULLY (Major Version)
@@ -48,4 +47,4 @@ npm run build-storybook
 
 - Patch versions of main dependencies
 - TypeScript/ESLint tooling updates
-- Storybook maintenance updates
+ 

@@ -27,30 +27,25 @@
 
 ### Operational Documentation
 
-4. **[Dependabot Strategy](./dependabot-strategy.md)**
+1. **[Dependabot Strategy](./dependabot-strategy.md)**
 
    - Current PR management status (2 open PRs)
    - Merge strategies by update type
    - Automated dependency handling
 
-5. **[Storybook Optimization](./storybook-optimization.md)**
 
-   - ✅ Bundle optimization complete
-   - Chunk size warning resolution
-   - Development tool performance tuning
-
-6. **[Bootstrap Guide](./bootstrap.md)**
+2. **[Bootstrap Guide](./bootstrap.md)**
 
    - Project setup and initialization
    - Development environment requirements
 
-7. **[Project Outline](./outline.md)**
+3. **[Project Outline](./outline.md)**
    - High-level project structure
    - Feature organization
 
 ### Automation & CI/CD
 
-8. **GitHub Actions Workflows**
+1. **GitHub Actions Workflows**
    - **`ci.yml`** - Build, lint, type-check, and test on push/PR
    - **`sync-preview.yml`** - Auto-sync preview branch with main updates
    - Automatic Netlify deployments for preview branches
@@ -86,11 +81,9 @@
 ```bash
 # Development
 npm run dev              # Next.js dev (localhost:3000)
-npm run storybook        # Storybook dev (localhost:6006)
 
 # Quality Assurance
 npm run build            # Next.js production build
-npm run build-storybook  # Storybook static build
 npm run type-check       # TypeScript compilation
 npm run lint             # ESLint validation
 
@@ -101,14 +94,13 @@ npm run test:watch       # Vitest watch mode
 
 ## 📁 File Organization
 
-```
+```text
 docs/
 ├── README.md                 # This overview document
 ├── prd.md                   # Product requirements
 ├── plan.md                  # Implementation roadmap
 ├── implementation-status.md  # Current status & progress
 ├── dependabot-strategy.md   # Dependency management
-├── storybook-optimization.md # Performance tuning
 ├── bootstrap.md             # Setup guide
 └── outline.md              # Project outline
 ```

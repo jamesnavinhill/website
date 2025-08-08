@@ -9,7 +9,7 @@ This is a modern, creative, and interactive personal/professional website built 
 - **Next.js 14+** with App Router
 - **TypeScript** (strict mode enabled)
 - **Tailwind CSS** for styling
-- **Storybook** for component development and documentation
+ 
 - **ESLint** with strict configuration
 - **Netlify** for hosting with `@netlify/plugin-nextjs`
 
@@ -83,17 +83,15 @@ src/
 
 ### Component Development
 
-- **Storybook is the single source of truth** for component development
-- All UI components MUST have corresponding `.stories.tsx` files
-- Develop components in isolation using Storybook first
-- Document props, variants, and usage patterns in stories
+- Build accessible, reusable components with clear props and variants
+- Provide minimal usage examples inline or in docs as needed
 
 ## Current Project Scope
 
 ### In Scope (Initial Release)
 
 - Landing page (static placeholder)
-- Storybook setup with component library
+ 
 - TypeScript and ESLint configuration
 - Basic Tailwind setup with design tokens
 - Server/client component separation
@@ -118,7 +116,7 @@ src/
 
 - ESLint must pass with zero errors
 - TypeScript compilation with `tsc --noEmit` must pass
-- Storybook build must complete successfully
+ 
 - Basic accessibility checks (jsx-a11y rules)
 
 ### ESLint Rules
@@ -154,7 +152,7 @@ src/
 
 ### Planned Additions
 
-- Storybook with React Vite builder
+ 
 - ESLint plugins: import, jsx-a11y, tailwindcss
 - Tailwind plugins: typography, forms, animate
 - Netlify plugin for Next.js
@@ -167,7 +165,7 @@ When generating code:
 2. **Default to server components** unless interactivity is required
 3. **Include proper TypeScript types** for all props and functions
 4. **Use Tailwind utility classes** for styling
-5. **Create corresponding Storybook stories** for new components
+ 
 6. **Follow the established directory structure**
 7. **Add JSDoc comments** for component props and complex functions
 8. **Ensure accessibility** with proper ARIA labels and semantic HTML
@@ -180,7 +178,7 @@ The site will eventually feature an immersive visual journey starting in space, 
 
 ## Documentation Requirements
 
-- Update Storybook documentation for new components
+ 
 - Add comments for complex logic
 - Document architectural decisions in `docs/decisions/`
 - Keep `docs/` directory updated with integration notes

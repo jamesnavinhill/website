@@ -30,11 +30,11 @@ A modern, creative, and interactive personal/professional website built with Nex
 - Accessible from root URL (`/`).
 - Clean, minimal design.
 
-#### 3.1.2 Component Library & Style Documentation (Storybook)
+#### 3.1.2 Component Library & Style Documentation
 
-- Storybook will be the single source of truth for all component previews, style documentation, and UI development workflows.
-- All UI components will be developed, documented, and visually tested in isolation using Storybook.
-- Storybook will provide:
+- Components will be developed and documented alongside the app.
+- Visual and accessibility testing handled via Vitest/Playwright in-app.
+- The system will provide:
   - Visual previews of all components and their states/variants
   - Live playground for tweaking props and styles
   - Documentation for usage, props, and best practices
@@ -66,7 +66,7 @@ A modern, creative, and interactive personal/professional website built with Nex
   - Workflow for keeping all branches (main, preview, A/B) up-to-date and in sync. All branches must catch up with main whenever it is updated, regardless of the source of the change. Merges should flow through preview when possible, but direct updates to main must be reflected in all branches to avoid drift.
   - A/B testing and theming changes will be frequent at first, especially during initial styling and theme development. Once the base is settled, A/B will focus on advanced features (e.g., 3D effects, canvas, etc.).
   - Document the branch management and merge process to avoid confusion.
-  - All theme and style changes should be reflected in Storybook for review and documentation.
+  - All theme and style changes should be reflected in the app and shared docs for review and documentation.
 
 ### 3.5 GitHub & Automation
 

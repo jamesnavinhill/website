@@ -29,7 +29,6 @@ updates:
         patterns:
           - "@types/*"
           - "@typescript-eslint/*"
-          - "@storybook/*"
           - "eslint*"
           - "*eslint*"
           - "prettier"

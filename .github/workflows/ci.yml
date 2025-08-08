@@ -39,9 +39,6 @@ jobs:
       - name: Build Next.js application
         run: npm run build
 
-      - name: Build Storybook
-        run: npm run build-storybook
-
       - name: Run tests
         run: npm run test
 
@@ -52,5 +49,4 @@ jobs:
           name: build-artifacts
           path: |
             .next/
-            storybook-static/
           retention-days: 7

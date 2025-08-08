@@ -107,8 +107,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <Typography variant="caption" className="text-muted-foreground">
-              Built with Next.js, Tailwind CSS, and Storybook •{" "}
-              {new Date().getFullYear()}
+              Built with Next.js and Tailwind CSS • {new Date().getFullYear()}
             </Typography>
           </div>
         </div>

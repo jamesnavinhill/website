@@ -2,26 +2,40 @@
 
 ## Overview
 
-Automatic synchronization of the `preview` branch with `main` branch updates.
+Two safe, loop-free automations keep `preview` and `main` flowing the right way:
+
+- main → preview: when `main` updates, `preview` is synced forward automatically
+- preview → main: when `preview` updates, a PR to `main` is opened/updated and set to auto-merge (if enabled)
 
 ## How It Works
 
-### Trigger
+### Triggers
 
-- **Automatic:** Runs whenever code is pushed to `main` branch
-- **Manual:** Can be triggered via GitHub Actions "Run workflow" button
+- main → preview: automatic on any push to `main`; also manual via Actions UI
+- preview → main: automatic on any push to `preview`; also manual via Actions UI
 
-### Process
+### Processes
 
-1. **Checkout main:** Gets the latest main branch code
-2. **Configure Git:** Sets up GitHub Actions bot as committer
-3. **Sync branches:** Merges main into preview (fast-forward when possible)
-4. **Push updates:** Updates the remote preview branch
-5. **Summary:** Reports success in GitHub Actions summary
+## 1. main → preview
+
+1. Checkout `main`
+2. Configure git
+3. Merge `main` into `preview` (fast-forward if possible)
+4. Push `preview`
+5. Summarize
+
+## 2. preview → main
+
+1. Detect if `preview` is ahead of `main`
+2. Open or update a PR `preview` → `main`
+3. Try to enable auto-merge via GraphQL (if repo allows auto-merge)
+4. Summarize
 
 ### Workflow File
 
-`.github/workflows/sync-preview.yml`
+`.github/workflows/sync-preview.yml` (main → preview)
+
+`.github/workflows/publish-from-preview.yml` (preview → main)
 
 ## Benefits
 
@@ -39,6 +53,12 @@ Automatic synchronization of the `preview` branch with `main` branch updates.
 
 ### ✅ Dependabot Friendly
 
+### ✅ Intentional Promotion
+
+- `preview` changes are promoted to `main` through a normal PR
+- Auto-merge can be enabled so merges happen after checks pass
+- Avoids infinite automation loops by only pushing `preview` on `main` updates and only opening a PR on `preview` updates
+
 - When Dependabot PRs are merged to main, preview updates automatically
 - Preview environment gets dependency updates immediately
 - Testing new dependencies in preview before promoting
@@ -47,7 +67,7 @@ Automatic synchronization of the `preview` branch with `main` branch updates.
 
 ### After Merging a PR to Main
 
-```
+```text
 1. PR merged to main →
 2. Sync workflow triggers automatically →
 3. Preview branch updated →
@@ -56,7 +76,7 @@ Automatic synchronization of the `preview` branch with `main` branch updates.
 
 ### After Merging Dependabot Updates
 
-```
+```text
 1. Dependabot PR merged to main →
 2. Preview branch gets dependency updates →
 3. Preview deployment uses new versions →
@@ -65,7 +85,7 @@ Automatic synchronization of the `preview` branch with `main` branch updates.
 
 ### Manual Sync (if needed)
 
-```
+```text
 1. Go to GitHub Actions tab
 2. Select "Sync Preview Branch" workflow
 3. Click "Run workflow" button
@@ -106,6 +126,24 @@ Common causes and solutions:
 - **Merge conflicts:** Resolve manually via Git commands above
 - **Protected branch:** Ensure GitHub Actions has push permissions
 - **Token issues:** Check GITHUB_TOKEN permissions in repository settings
+
+### Auto-merge Not Enabling
+
+- Ensure repository has Auto-merge enabled (Settings → General → Pull Requests → Enable auto-merge)
+- Branch protection rules must allow the chosen merge method (workflow uses squash by default)
+- GITHUB_TOKEN needs `pull-requests: write` permission (granted in workflow file)
+
+## Recommended Settings
+
+- Enable Auto-merge for PRs (optional but recommended)
+- Protect `main` to require CI checks (type check, lint, build, tests)
+- Optionally protect `preview` to require checks before push from humans; the automation merges `main` → `preview` directly
+
+## Flow Summary
+
+1. Push to `preview` → PR opens to `main` and auto-merge is enabled (if available)
+2. Merge to `main` (manually or auto) → `preview` syncs forward automatically
+3. No loops: we never push to `main` directly from automation; we use PRs only
 
 ## Configuration
 

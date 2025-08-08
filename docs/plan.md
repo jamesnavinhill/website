@@ -2,7 +2,7 @@
 
 Status: DRAFT (Initial foundational planning based on PRD dated 2025-08-07)
 Owner: Project Owner (with Copilot assistance)
-Scope: Landing page + Storybook-driven component/style system only.
+Scope: Landing page + component/style system.
 
 > This plan is derived from the PRD. It emphasizes a rigorous foundation, explicit Server vs Client boundaries, and future extensibility. All future sections listed in the PRD remain intentionally **unscaffolded**.
 
@@ -13,10 +13,10 @@ Scope: Landing page + Storybook-driven component/style system only.
 | Topic                | Assumption (Adjust if different)                                  | Action if Changed                                                   |
 | -------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | Node.js              | 20.x LTS                                                          | Update CI + `.nvmrc` / engines in `package.json`                    |
-| Next.js              | Using App Router (14.x+). No experimental RSC APIs beyond stable. | Revisit Storybook + server component integration                    |
+| Next.js              | Using App Router (14.x+). No experimental RSC APIs beyond stable. | —                    |
 | Package Manager      | npm (default from `create-next-app`).                             | If moving to pnpm/yarn: update CI + lockfile strategy               |
 | Deployment           | Netlify using `@netlify/plugin-nextjs`.                           | If moving to Vercel: remove Netlify plugin + adjust image/CDN notes |
-| Storybook            | Latest stable (expected 8.x).                                     | Verify config file naming differences (e.g. `main.ts`)              |
+| Storybook            | Removed                                                          |                                                                  |
 | Testing              | Introduce minimal unit + a11y lint first; deeper testing later.   | If end-to-end needed early: add Playwright setup                    |
 | Styling              | Tailwind CSS with custom tokens; no design system lib initially.  | If adding shadcn/MUI: treat each experiment in A/B branches         |
 | Analytics/Tracking   | None initially.                                                   | Later: add script via server layout + consent handling              |
@@ -29,11 +29,11 @@ Scope: Landing page + Storybook-driven component/style system only.
 1. Confirm baseline repository hygiene & strengthen TypeScript / lint config.
 2. Establish directory & naming conventions (including Server vs Client clarity).
 3. Expand Tailwind config (design tokens, dark mode strategy, typography).
-4. Introduce Storybook (component-first workflow) integrated with Tailwind + Next.
+4. (Removed) Storybook component-first workflow.
 5. Implement Landing Page (static placeholder) using only approved patterns.
 6. Add initial accessibility & performance safeguards.
 7. Branching & A/B process documentation + lightweight tooling.
-8. Add CI (build, type-check, lint, Storybook build) + Dependabot + status badges.
+8. Add CI (build, type-check, lint) + Dependabot + status badges.
 9. Add Netlify deployment config (production + preview) + environment parity notes.
 10. Add minimal testing scaffolding (unit + component + a11y lint pass).
 11. Documentation expansion (architecture, decisions, open questions).
@@ -89,7 +89,7 @@ Separation rules:
 Tasks:
 
 - Enable strictest TS mode (`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`).
-- Add path aliases (already `@/*`). Ensure Storybook resolves same alias.
+- Add path aliases (already `@/*`).
 - ESLint: augment with plugins:
   - `eslint-plugin-import` (ordering & boundaries)
   - `@typescript-eslint` (already via Next config) – ensure latest
@@ -128,7 +128,7 @@ npm i -D @tailwindcss/typography @tailwindcss/forms @tailwindcss/animate
 
 ---
 
-## 5. Storybook Setup
+## 5. (Removed) Storybook Setup
 
 Objectives:
 
@@ -137,19 +137,19 @@ Objectives:
 
 Steps:
 
-1. Install Storybook with framework preset: `npx storybook@latest init --builder vite` (or webpack if issues). Vite builder recommended for speed (check official Storybook + Next docs; adapt if any incompatibility with server components—fallback to Webpack if required).
-2. Add `@storybook/addon-a11y`, `@storybook/addon-interactions`, `@storybook/addon-essentials` (should be default), `@storybook/addon-styling` (if needed for Tailwind global injection).
-3. Configure `.storybook/preview.ts` to import `src/app/globals.css` (Tailwind base) and set global parameters (a11y, layout, backgrounds, dark mode toggle).
-4. Add alias resolution to `.storybook/main.ts` to mirror `@/*`.
+ 
+ 
+ 
+ 
 5. Pattern: Prefer colocated stories `Component.stories.tsx` adjacent to source. For purely server components, create a small wrapper or mark them as client if necessary (OPEN QUESTION: accept temporary client wrappers?).
 6. Add a `Docs` entry (`Introduction.mdx`) summarizing design tokens.
-7. Add build script: `"storybook": "storybook dev -p 6006", "build-storybook": "storybook build"`.
-8. Optional (future): Chromatic / Netlify Storybook deploy.
+ 
+ 
 
 Dependencies:
 
 ```bash
-npm i -D @storybook/react-vite @storybook/test @storybook/addon-a11y @storybook/addon-interactions @storybook/addon-styling
+ 
 ```
 
 (Adjust if official CLI selects updated package names.)
@@ -179,7 +179,7 @@ Steps:
 Tasks:
 
 - Add ESLint `jsx-a11y` plugin.
-- Add Storybook a11y addon to surface violations early.
+ 
 - Provide internal checklist: color contrast, focus order, prefers-reduced-motion respect (when animations added later), alt text policy.
 - Add `next.config.ts` performance options: `images: { domains: [], formats: ['image/avif','image/webp'] }` (keep empty until needed).
 - Consider enabling `reactStrictMode` (usually default) and `experimental.optimizePackageImports` (verify stability before enabling—OPEN QUESTION).
@@ -214,7 +214,7 @@ GitHub Actions Workflows:
 
 1. `ci.yml` (trigger: PR + push):
    - Install (cache `~/.npm`), `npm run lint`, `npm run type-check`, `npm run build`.
-   - Separate job: `storybook-build` (depends on build) to run `npm run build-storybook`.
+  - (Removed) Storybook build job.
 2. `dependabot.yml` for `npm` daily (or weekly) updates; group minor dev-only updates.
 3. (Optional later) `preview-deploy.yml` (if using custom preview naming—Netlify can auto-deploy branches).
 
@@ -253,7 +253,7 @@ Steps:
 Initial scope:
 
 - Type-level: `tsc --noEmit` (already part of build or separate script `type-check`).
-- Unit / component tests (later) could use **Vitest** + **@testing-library/react** for speed (works well with Vite). If Storybook uses Vite builder, synergy.
+- Unit / component tests (later) use **Vitest** + **@testing-library/react**.
 - For now: Plan placeholder only (no immediate test scaffolding required if out-of-scope). Optionally add a single sample test to enforce harness validity.
 
 Proposed dependencies (when activated):
@@ -274,8 +274,7 @@ Add `test` script: `"test": "vitest run"`, `"test:watch": "vitest"`.
 | `dev`                | Next dev server                             |
 | `lint`               | ESLint across source & stories              |
 | `type-check`         | `tsc --noEmit`                              |
-| `storybook`          | Run Storybook dev                           |
-| `build-storybook`    | Static Storybook build                      |
+ 
 | `analyze` (optional) | Bundle analysis with `next build --analyze` |
 | `format`             | Prettier write (if adopted)                 |
 | `format:check`       | Prettier check                              |
@@ -297,10 +296,10 @@ Phase 1 (Foundation / Lint / Tokens):
 npm i -D eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-tailwindcss eslint-plugin-unused-imports @tailwindcss/typography @tailwindcss/forms @tailwindcss/animate
 ```
 
-Phase 2 (Storybook):
+ 
 
 ```bash
-npm i -D @storybook/react-vite @storybook/addon-a11y @storybook/addon-interactions @storybook/addon-styling @storybook/test
+ 
 ```
 
 Phase 3 (CI enhancements / Netlify / Optional):
@@ -330,7 +329,7 @@ Optional Future (Not now):
 5. Avoid environment leakage: only expose via `NEXT_PUBLIC_` prefix variables.
 6. Large computation: run on server; if user-interactive transformation needed, create paired server utility and thin client harness.
 7. Directory-level checks enforced by ESLint custom rule patterns.
-8. Storybook: if server component cannot easily render, supply a lightweight client wrapper that receives props and renders the server component's output (OPEN DECISION).
+ 
 
 ---
 
@@ -353,7 +352,7 @@ Optional Future (Not now):
 | Build                  | `next build` completes with no errors                                   |
 | Lint                   | ESLint clean (no errors; warnings acceptable temporarily if documented) |
 | Types                  | `tsc --noEmit` zero errors                                              |
-| Storybook              | `build-storybook` completes (no broken stories)                         |
+ 
 | Accessibility (basic)  | No critical a11y violations in key stories (hero, button, layout)       |
 | Performance (baseline) | Lighthouse (local) passes core thresholds: FCP < 2s (local dev)         |
 
@@ -365,7 +364,7 @@ Optional Future (Not now):
 | -------------------------------- | ---------------------------------- | ---------------------------------------------------------- |
 | Server/Client boundary confusion | Hydration mismatches, bundle bloat | Explicit folder rules + ESLint + documentation             |
 | Early dependency sprawl          | Maintenance cost                   | Phase gates for adding libs; ADR before major lib adoption |
-| Storybook + RSC rough edges      | Slowed component dev               | Use wrappers; track upstream Storybook RSC progress        |
+ 
 | Branch drift in A/B              | Merge conflicts                    | Scheduled rebase script + max lifespan policy (<2 weeks)   |
 | Netlify plugin version mismatch  | Deployment failures                | Pin plugin version; monitor release notes                  |
 
@@ -387,11 +386,11 @@ Optional Future (Not now):
 | #   | Question                                          | Suggested Options                                        |
 | --- | ------------------------------------------------- | -------------------------------------------------------- |
 | 1   | Dark mode strategy?                               | `class` toggle                                           |
-| 2   | Storybook deployment?                             | integrate Chromatic                                      |
+ 
 | 3   | Adopt Prettier or rely on ESLint formatting only? | Add Prettier for consistency                             |
 | 4   | Testing framework timeline?                       | Defer until after landing page                           |
 | 5   | Do we enforce commit conventions?                 | Add Commitlint + Husky                                   |
-| 6   | RSC Storybook approach?                           | THIS IS IMPORTANT _NEEDS DONE PROPERLY_ NO WORKAROUNDS |
+ 
 | 7   | Analytics / telemetry early?                      | simple privacy-friendly (e.g., Plausible)                |
 | 8   | Feature flag mechanism?                           | Simple config object                                     |
 | 9   | Node version pin source?                          | Netlify only                                             |
@@ -410,11 +409,11 @@ Optional Future (Not now):
 - [ ] Add strict TS options + update `tsconfig.json`.
 - [ ] Enhance ESLint config (plugins, overrides for server/client separation).
 - [ ] Extend Tailwind config (tokens, dark mode setting).
-- [ ] Initialize Storybook + integrate Tailwind + alias.
+ 
 - [ ] Create initial foundational components (Typography primitives) + stories.
 - [ ] Implement static Landing page content.
 - [ ] Add `@netlify/plugin-nextjs` and `netlify.toml`.
-- [ ] Draft `ci.yml` (build, lint, type-check, storybook build) + activate.
+- [ ] Draft `ci.yml` (build, lint, type-check) + activate.
 - [ ] Add `dependabot.yml`.
 - [ ] Draft `docs/branching.md` & finalize branch naming.
 - [ ] Record ADR for theming + lint boundary decisions.
@@ -435,7 +434,7 @@ This `plan.md` should evolve through small PRs after each major decision (linkin
 - Next.js App Router: <https://nextjs.org/docs/app>
 - Server Components Guidelines: <https://nextjs.org/docs/app/building-your-application/rendering/server-components>
 - Tailwind Config: <https://tailwindcss.com/docs/configuration>
-- Storybook for Next.js: <https://storybook.js.org/docs/react/get-started>
+ 
 - Netlify Next.js Plugin: <https://github.com/netlify/next-runtime>
 - ESLint Tailwind Plugin: <https://github.com/francoismassart/eslint-plugin-tailwindcss>
 - Dependabot Config: <https://docs.github.com/code-security/dependabot>

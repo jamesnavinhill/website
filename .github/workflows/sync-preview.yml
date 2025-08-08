@@ -45,9 +45,3 @@ jobs:
           echo "✅ Preview branch successfully synced with main" >> $GITHUB_STEP_SUMMARY
           echo "- Main commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "- Preview branch updated at: $(date)" >> $GITHUB_STEP_SUMMARY
-
-      - name: Create summary
-        run: |
-          echo "✅ Preview branch successfully synced with main" >> $GITHUB_STEP_SUMMARY
-          echo "- Main commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Preview branch updated at: $(date)" >> $GITHUB_STEP_SUMMARY

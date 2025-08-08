@@ -1,0 +1,99 @@
+name: Promote Preview to Main
+
+on:
+  push:
+    branches: [preview]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: publish-from-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  open-pr-and-automerge:
+    name: Open PR preview → main and enable auto-merge
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout preview
+        uses: actions/checkout@v4
+        with:
+          ref: preview
+          fetch-depth: 0
+
+      - name: Compare and upsert PR (sets env vars)
+        id: compare_and_pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const res = await github.rest.repos.compareCommits({ owner, repo, base: 'main', head: 'preview' });
+            const ahead = Number(res.data.ahead_by || 0);
+            core.info(`ahead_by=${ahead}, behind_by=${res.data.behind_by}, status=${res.data.status}`);
+            if (ahead === 0) {
+              core.exportVariable('HAS_CHANGES', 'false');
+              core.summary.addRaw('No commits ahead of main. Nothing to promote.\n');
+              await core.summary.write();
+              return; // nothing to do
+            }
+            // There are changes to promote
+            core.exportVariable('HAS_CHANGES', 'true');
+            // Look for an existing open PR from preview to main
+            const existing = await github.rest.pulls.list({ owner, repo, state: 'open', base: 'main', head: `${owner}:preview`, per_page: 1 });
+            let pr;
+            if (existing.data.length > 0) {
+              pr = existing.data[0];
+              core.info(`Existing PR #${pr.number} found.`);
+              await github.rest.pulls.update({ owner, repo, pull_number: pr.number, title: pr.title ?? 'Promote preview to main' });
+            } else {
+              pr = (await github.rest.pulls.create({
+                owner,
+                repo,
+                head: 'preview',
+                base: 'main',
+                title: 'Promote preview to main',
+                body: 'Automated PR to promote latest changes from preview to main. This PR was opened by a workflow and will auto-merge after checks pass.'
+              })).data;
+              core.info(`Created PR #${pr.number}.`);
+            }
+            // Export PR details as env vars for later steps
+            core.exportVariable('PR_NUMBER', String(pr.number));
+            core.exportVariable('PR_NODE_ID', pr.node_id);
+
+      - name: Enable auto-merge (squash) if repository allows it
+        uses: actions/github-script@v7
+        with:
+          script: |
+            if (process.env.HAS_CHANGES !== 'true') {
+              core.info('No changes to promote; skipping auto-merge enable.');
+              return;
+            }
+            const prNodeId = process.env.PR_NODE_ID;
+            if (!prNodeId) {
+              core.warning('No PR node id found, skipping auto-merge enable.');
+              return;
+            }
+            const query = `
+              mutation EnableAutoMerge($pullRequestId: ID!, $method: PullRequestMergeMethod) {
+                enablePullRequestAutoMerge(input: { pullRequestId: $pullRequestId, mergeMethod: $method }) {
+                  pullRequest { number, autoMergeRequest { enabledAt, enabledBy { login } } }
+                }
+              }
+            `;
+            try {
+              const result = await github.graphql(query, { pullRequestId: prNodeId, method: 'SQUASH' });
+              core.info(`Auto-merge enabled: ${JSON.stringify(result)}`);
+            } catch (err) {
+              core.warning(`Failed to enable auto-merge (this may mean Auto-merge is disabled in repo settings). Details: ${err}`);
+            }
+
+      - name: Summary
+        run: |
+          if ($env:HAS_CHANGES -eq 'true' -and $env:PR_NUMBER) {
+            "Opened/updated PR #$env:PR_NUMBER to promote preview → main." >> $env:GITHUB_STEP_SUMMARY
+            "Auto-merge will occur after required checks pass (if enabled)." >> $env:GITHUB_STEP_SUMMARY
+          }
