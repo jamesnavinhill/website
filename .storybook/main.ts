@@ -22,6 +22,13 @@ const config: StorybookConfig = {
         "@": path.resolve(__dirname, "../src"),
       };
     }
+
+    // Simple fix: Just increase the chunk size warning limit
+    // Storybook is a development tool and large chunks are normal
+    if (config.build) {
+      config.build.chunkSizeWarningLimit = 2000; // 2MB - reasonable for dev tools
+    }
+
     return config;
   },
 };
