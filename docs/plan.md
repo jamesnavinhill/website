@@ -391,7 +391,7 @@ Optional Future (Not now):
 | 3   | Adopt Prettier or rely on ESLint formatting only? | Add Prettier for consistency                             |
 | 4   | Testing framework timeline?                       | Defer until after landing page                           |
 | 5   | Do we enforce commit conventions?                 | Add Commitlint + Husky                                   |
-| 6   | RSC Storybook approach?                           | THIS IS IMPORTANT _ NEEDS DONE PROPERLY _ NO WORKAROUNDS |
+| 6   | RSC Storybook approach?                           | THIS IS IMPORTANT _NEEDS DONE PROPERLY_ NO WORKAROUNDS |
 | 7   | Analytics / telemetry early?                      | simple privacy-friendly (e.g., Plausible)                |
 | 8   | Feature flag mechanism?                           | Simple config object                                     |
 | 9   | Node version pin source?                          | Netlify only                                             |
