@@ -13,6 +13,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    // Strictest TypeScript configuration
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
     "plugins": [
       {
         "name": "next"

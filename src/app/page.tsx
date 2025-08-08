@@ -1,102 +1,117 @@
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Typography } from "@/components/ui/typography";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <header className="container mx-auto px-4 py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <Typography variant="h1" className="text-foreground">
+            Welcome to My Digital Universe
+          </Typography>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Typography
+            variant="body"
+            className="text-xl text-muted-foreground max-w-2xl mx-auto"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            A journey through space, code, creativity, and everything in
+            between. This is where ideas take flight and digital dreams come to
+            life.
+          </Typography>
+
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button variant="primary" size="lg">
+              Begin the Journey
+            </Button>
+            <Button variant="outline" size="lg">
+              Explore Components
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Content Preview Section */}
+      <main className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <Typography variant="h2" className="text-foreground mb-4">
+              The Journey Ahead
+            </Typography>
+            <Typography
+              variant="body"
+              className="text-muted-foreground max-w-2xl mx-auto"
+            >
+              From the vastness of space to the depths of creativity, explore
+              the different facets of this digital experience.
+            </Typography>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Developer",
+                description: "Code, projects, and technical explorations",
+                status: "Coming Soon",
+              },
+              {
+                title: "Artist",
+                description: "Music, design, and creative expressions",
+                status: "Coming Soon",
+              },
+              {
+                title: "Thinker",
+                description: "Ideas, research, and thoughtful content",
+                status: "Coming Soon",
+              },
+              {
+                title: "Gamer",
+                description: "Gaming experiences and development",
+                status: "Coming Soon",
+              },
+              {
+                title: "Professional",
+                description: "Work history and achievements",
+                status: "Coming Soon",
+              },
+              {
+                title: "Community",
+                description: "Connections and shared experiences",
+                status: "Coming Soon",
+              },
+            ].map((section, index) => (
+              <div
+                key={index}
+                className="border border-border rounded-lg p-6 bg-card"
+              >
+                <Typography variant="h4" className="text-card-foreground mb-2">
+                  {section.title}
+                </Typography>
+                <Typography
+                  variant="body"
+                  className="text-muted-foreground mb-4"
+                >
+                  {section.description}
+                </Typography>
+                <Typography variant="caption" className="text-muted-foreground">
+                  {section.status}
+                </Typography>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-muted/50">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <Typography variant="caption" className="text-muted-foreground">
+              Built with Next.js, Tailwind CSS, and Storybook •{" "}
+              {new Date().getFullYear()}
+            </Typography>
+          </div>
+        </div>
       </footer>
     </div>
   );
