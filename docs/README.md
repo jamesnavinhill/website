@@ -25,6 +25,11 @@
    - ⏳ Active Dependabot PRs requiring review
    - Quality gates and build status
 
+4. **[Builder Integration Report](./builder-integration-report.md)**
+   - Builder + Next.js + Netlify summary
+   - Preview-first workflow and draft previews
+   - Minimal, proven integration plan
+
 ### Operational Documentation
 
 1. **[Dependabot Strategy](./dependabot-strategy.md)**
@@ -100,6 +105,7 @@ docs/
 ├── prd.md                   # Product requirements
 ├── plan.md                  # Implementation roadmap
 ├── implementation-status.md  # Current status & progress
+├── builder-integration-report.md # Builder + Next.js + Netlify report
 ├── dependabot-strategy.md   # Dependency management
 ├── bootstrap.md             # Setup guide
 └── outline.md              # Project outline
